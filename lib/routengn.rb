@@ -2,10 +2,13 @@ gem 'oauth'
 require 'oauth/consumer'
 require 'json'
 require 'http/multipart'
+require 'routengn/mapper'
+require 'routengn/carrier'
 
 module RouteNGN
-  class API
-    attr_accessor :consumer, :request_token, :access_token
+
+  class Connection
+    attr_accessor :access_token
 
     def initialize(site, key, secret)
       @consumer=OAuth::Consumer.new(key,
@@ -19,6 +22,18 @@ module RouteNGN
 
       @access_token = @request_token.get_access_token
       @access_token.consumer.http.read_timeout = 5000
+
+      RouteNGN::connection = self
+      #@carrier = Carrier.new(@access_token)
     end
   end
+
+  def self.connection=(connection)
+    @@connection = connection
+  end
+
+  def self.connection
+    @@connection
+  end
+
 end
