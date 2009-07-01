@@ -1,7 +1,7 @@
-require 'json'
 gem 'oauth'
 require 'oauth/consumer'
-require 'routengn/multipart'
+require 'json'
+require 'http/multipart'
 
 module RouteNGN
   class API
