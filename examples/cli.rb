@@ -41,43 +41,43 @@ def carrier_menu
   str = gets.chomp
   case str
     when '1' #list carriers
-      puts "\n" + JSON.parse(@access_token.get('/carrier/list/carrier').body).inspect
+      puts "\n" + JSON.parse(@access_token.get('/carrier/carrier').body).inspect
     when '2' #list groups
       print "carrier id: "
       carrier_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/carrier/list/group/#{carrier_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.get("/carrier/group/#{carrier_id}").body).inspect
       when '3' #list end points
       print "group id: "
       group_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/carrier/list/endpoint/#{group_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.get("/carrier/endpoint/#{group_id}").body).inspect
     when '4' #add carriers
       print "carrier name: "
       carrier_name = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/carrier/add/carrier/#{carrier_name}").body).inspect
+      puts "\n" + JSON.parse(@access_token.post("/carrier/carrier/#{carrier_name}").body).inspect
     when '5' #add groups
       print "carrier id: "
       carrier_id = gets.chomp
       print "group name: "
       group_name = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/carrier/add/group/#{group_name}/#{carrier_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.post("/carrier/group/#{group_name}/#{carrier_id}").body).inspect
     when '6' #add end points
       print "group id: "
       group_id = gets.chomp
       print "end point name: "
       endpoint_name = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/carrier/add/endpoint/#{endpoint_name}/#{group_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.post("/carrier/endpoint/#{endpoint_name}/#{group_id}").body).inspect
     when '7' #delete carriers
       print "carrier id: "
       carrier_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/carrier/delete/carrier/#{carrier_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.delete("/carrier/carrier/#{carrier_id}").body).inspect
     when '8' #delete groups
       print "group id: "
       group_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/carrier/delete/group/#{group_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.delete("/carrier/group/#{group_id}").body).inspect
     when '9' #delete end points
       print "end point id: "
       endpoint_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/carrier/delete/endpoint/#{endpoint_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.delete("/carrier/endpoint/#{endpoint_id}").body).inspect
     when 'back'
       return  
   end
@@ -88,43 +88,43 @@ def region_menu
   str = gets.chomp
   case str
     when '1' #list regions
-      puts "\n" + JSON.parse(@access_token.get('/region/list/region').body).inspect
+      puts "\n" + JSON.parse(@access_token.get('/region/region').body).inspect
     when '2' #list locales
       print "region id: "
       region_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/region/list/locale/#{region_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.get("/region/locale/#{region_id}").body).inspect
     when '3' #list dial codes
       print "locale id: "
       locale_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/region/list/dialcode/#{locale_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.get("/region/dialcode/#{locale_id}").body).inspect
     when '4' #add regions
       print "region name: "
       region_name = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/region/add/region/#{region_name}").body).inspect
+      puts "\n" + JSON.parse(@access_token.post("/region/region/#{region_name}").body).inspect
     when '5' #add locales
       print "region id: "
       region_id = gets.chomp
       print "locale name: "
       locale_name = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/region/add/locale/#{locale_name}/#{region_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.post("/region/locale/#{locale_name}/#{region_id}").body).inspect
     when '6' #add dial codes
       print "locale id: "
       locale_id = gets.chomp
       print "dialcode: "
       dialcode = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/region/add/dialcode/#{dialcode}/#{locale_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.post("/region/dialcode/#{dialcode}/#{locale_id}").body).inspect
     when '7' #delete regions
       print "region id: "
       region_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/region/delete/region/#{region_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.delete("/region/region/#{region_id}").body).inspect
     when '8' #delete locales
       print "locale id: "
       locale_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/region/delete/locale/#{locale_id}").body).inspect
+      puts "\n" + JSON.parse(@access_token.delete("/region/locale/#{locale_id}").body).inspect
     when '9' #delete dial codes
       print "dialcode id: "
       dialcode_id = gets.chomp
-      puts "\n" + JSON.parse(@access_token.get("/region/delete/dialcode/#{dialcode_id}").body).inspect 
+      puts "\n" + JSON.parse(@access_token.delete("/region/dialcode/#{dialcode_id}").body).inspect 
     when 'back'
       return
   end
@@ -158,16 +158,16 @@ def route_table_menu
   str = gets.chomp
   case str
     when '1'
-      puts @access_token.get('/route/list/instances').body      
+      puts @access_token.get('/route/instances').body      
     when '2'
       
-      puts @access_token.get('/route/list/routes/13').body
+      puts @access_token.get('/route/routes/13').body
     when '3'
       print "table name: "
       table_name = gets.chomp
       print "table type: "
       table_type = gets.chomp
-      puts @access_token.get("/route/create/table/#{table_name}/#{table_type}").body 
+      puts @access_token.post("/route/table/#{table_name}/#{table_type}").body 
     when '4'
       print "table type: "
       table_type = gets.chomp
@@ -175,7 +175,7 @@ def route_table_menu
       instance_id = gets.chomp
       print "groups: "
       groups = gets.chomp
-      puts @access_token.get("/route/update/lcr/#{table_type}/#{instance_id}/#{groups}").body
+      puts @access_token.put("/route/update/lcr/#{table_type}/#{instance_id}/#{groups}").body
     when '5'
       print "search type: "
       search_type = gets.chomp
