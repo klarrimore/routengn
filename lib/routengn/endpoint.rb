@@ -1,6 +1,6 @@
 module RouteNGN
 
-  class Carrier
+  class Endpoint
     include RouteNGN::Mapper
 
     def initialize(args)
@@ -12,15 +12,11 @@ module RouteNGN
     end
 
     def self.base_url
-      '/api/carrier'
+      '/api/endpoint'
     end
 
     def self.type
-      'carrier'
-    end
-
-    def self.groups
-      
+      'endpoint'
     end
 
   end

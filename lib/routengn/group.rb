@@ -1,6 +1,6 @@
 module RouteNGN
 
-  class Carrier
+  class Group
     include RouteNGN::Mapper
 
     def initialize(args)
@@ -12,15 +12,15 @@ module RouteNGN
     end
 
     def self.base_url
-      '/api/carrier'
+      '/api/group'
     end
 
     def self.type
-      'carrier'
+      'group'
     end
 
-    def self.groups
-      
+    def self.endpoints
+
     end
 
   end
