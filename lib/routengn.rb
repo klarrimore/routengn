@@ -1,3 +1,4 @@
+require 'rubygems'
 gem 'oauth'
 require 'oauth/consumer'
 require 'json'
@@ -24,7 +25,6 @@ module RouteNGN
       @access_token.consumer.http.read_timeout = 5000
 
       RouteNGN::connection = self
-      #@carrier = Carrier.new(@access_token)
     end
   end
 

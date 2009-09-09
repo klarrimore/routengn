@@ -3,16 +3,20 @@ module RouteNGN
   class Carrier
     include RouteNGN::Mapper
 
-    self.class_eval do
-      @@base_url = '/carrier'
-      @@name = 'carrier'
+    def self.base_url
+      '/api/carrier'
     end
 
-    attr_accessor :id, :name
+    def self.type
+      'carrier'
+    end
 
-    def initialize(id, name)
-      @id = id
-      @name = name
+    def initialize(args)
+      args.each do |k,v|
+        instance_variable_set "@#{k}", v
+        self.class.class_eval "def #{k}; @#{k} ;end;" +
+                              "def #{k}=(value); @#{k} = value ;end"  
+      end
     end
 
     def save

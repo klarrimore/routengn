@@ -22,20 +22,25 @@ module RouteNGN
     def find_all(options)
       result = []
 
-      data = (JSON.parse RouteNGN.connection.access_token.get("#{@@base_url}/list/#{@@name}").body)['data']
+      response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{type}").body)
 
-      puts data.inspect
+      message = response['message']
+
+      raise 'blew the fuck up' if message['text'] != 'OK'
+
+      data = response['data']
 
       data.each do |d|
-        result << Carrier.new(d['id'], d['name'])
+        result << new(d)
       end
 
       result
     end
 
-    def find_foo(options)
-
+    def save
+      
     end
-  end
+
+  end 
 
 end
