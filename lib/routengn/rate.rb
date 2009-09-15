@@ -1,5 +1,6 @@
 module RouteNGN
 
+
   class Rate
     include RouteNGN::Mapper
 
@@ -16,5 +17,6 @@ module RouteNGN
     end
 
   end
+
 
 end
