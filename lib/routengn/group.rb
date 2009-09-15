@@ -4,23 +4,23 @@ module RouteNGN
     include RouteNGN::Mapper
 
     def initialize(args)
-      args.each do |k,v|
-        instance_variable_set "@#{k}", v
-        self.class.class_eval "def #{k}; @#{k} ;end;" +
-                              "def #{k}=(value); @#{k} = value ;end"
-      end
+      super(args)
     end
 
     def self.base_url
-      '/api/group'
+      '/carrier'
     end
 
     def self.type
       'group'
     end
 
-    def self.endpoints
+    def endpoints
+      Endpoint.find(:all, "epgroup_id = #{id}")
+    end
 
+    def rates
+      Rate.find(:all, "epgroup_id = #{id}")      
     end
 
   end

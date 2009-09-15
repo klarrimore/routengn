@@ -1,6 +1,6 @@
 module RouteNGN
 
-  class Endpoint
+  class Region < Model
     include RouteNGN::Mapper
 
     def initialize(args)
@@ -8,11 +8,15 @@ module RouteNGN
     end
 
     def self.base_url
-      '/carrier'
+      '/region'
     end
 
     def self.type
-      'endpoint'
+      'region'
+    end
+
+    def locales
+      Group.find(:all, "region_id = #{id}")
     end
 
   end

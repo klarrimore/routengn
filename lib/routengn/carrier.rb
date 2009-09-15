@@ -1,26 +1,22 @@
 module RouteNGN
 
-  class Carrier
+  class Carrier < Model
     include RouteNGN::Mapper
 
     def initialize(args)
-      args.each do |k,v|
-        instance_variable_set "@#{k}", v
-        self.class.class_eval "def #{k}; @#{k} ;end;" +
-                              "def #{k}=(value); @#{k} = value ;end"
-      end
+      super(args)
     end
 
     def self.base_url
-      '/api/carrier'
+      '/carrier'
     end
 
     def self.type
       'carrier'
     end
 
-    def self.groups
-      
+    def groups      
+      Group.find(:all, "carrier_id = #{id}")
     end
 
   end

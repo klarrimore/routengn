@@ -1,6 +1,6 @@
 module RouteNGN
 
-  class Endpoint
+  class Locales < Model
     include RouteNGN::Mapper
 
     def initialize(args)
@@ -8,11 +8,15 @@ module RouteNGN
     end
 
     def self.base_url
-      '/carrier'
+      '/region'
     end
 
     def self.type
-      'endpoint'
+      'locale'
+    end
+
+    def dialcodes
+      Dialcode.find(:all, "dialcode_id = #{id}")
     end
 
   end

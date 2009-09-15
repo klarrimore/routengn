@@ -1,6 +1,6 @@
 module RouteNGN
 
-  class Endpoint
+  class Dialcode < Model
     include RouteNGN::Mapper
 
     def initialize(args)
@@ -8,11 +8,11 @@ module RouteNGN
     end
 
     def self.base_url
-      '/carrier'
+      '/region'
     end
 
     def self.type
-      'endpoint'
+      'dialcode'
     end
 
   end

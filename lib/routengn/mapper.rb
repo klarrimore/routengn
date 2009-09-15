@@ -22,7 +22,12 @@ module RouteNGN
     def find_all(options)
       result = []
 
-      response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{type}").body)
+      if !options.empty?
+        id = options.first.split.last        
+        response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{type}/#{id}").body)
+      else
+        response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{type}").body)
+      end  
 
       message = response['message']
 
@@ -40,6 +45,10 @@ module RouteNGN
     def save
       
     end
+
+    def delete
+
+    end    
 
   end 
 

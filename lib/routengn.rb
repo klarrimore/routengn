@@ -4,7 +4,15 @@ require 'oauth/consumer'
 require 'json'
 require 'http/multipart'
 require 'routengn/mapper'
+require 'routengn/model'
 require 'routengn/carrier'
+require 'routengn/group'
+require 'routengn/endpoint'
+require 'routengn/region'
+require 'routengn/locale'
+require 'routengn/dialcode'
+require 'routengn/rate'
+require 'routengn/route'
 
 module RouteNGN
 
