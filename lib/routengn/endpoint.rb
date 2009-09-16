@@ -1,6 +1,6 @@
 module RouteNGN
 
-  class Endpoint
+  class Endpoint < Model
     include RouteNGN::Mapper
 
     def initialize(args)
