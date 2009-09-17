@@ -5,11 +5,10 @@ gem 'oauth'
 require 'oauth/consumer'
 require 'multipart'
 
-
-@consumer=OAuth::Consumer.new "",
-                              "",
+@consumer=OAuth::Consumer.new "", #API key
+                              "", #API secret
                               { :signature_method   => 'HMAC-SHA1',
-                                :site=>""
+                                :site=>"" #EX: http://routengn.net
                               }
 
 @request_token = @consumer.get_request_token
