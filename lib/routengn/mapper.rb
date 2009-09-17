@@ -4,12 +4,33 @@ module RouteNGN
     def self.included(model)
       model.class_eval do
         extend ClassMethods
-
       end
     end
   end
 
+  module InstanceMethods
+    def save
+      response = (JSON.parse RouteNGN.connection.access_token.post("#{self.class.base_url}#{add_url}").body)
+    end
+
+    def delete
+      response = (JSON.parse RouteNGN.connection.access_token.delete("#{self.class.base_url}#{delete_url}").body)
+    end
+  end
+
   module ClassMethods
+
+    def create_instance_methods(ref)
+      ref.instance_eval do
+        extend InstanceMethods
+      end
+    end
+
+    def delete(id)
+      response = (JSON.parse RouteNGN.connection.access_token.delete("#{base_url}/#{id}").body)  
+    end
+
+    #TODO we probably don't need complicated finders  
     def find(*args)
       case args.first
         when :all then
@@ -23,10 +44,10 @@ module RouteNGN
       result = []
 
       if !options.empty?
-        id = options.first.split.last        
-        response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{type}/#{id}").body)
+        id = options.first.split.last # total temporary hack        
+        response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{id}").body)
       else
-        response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{type}").body)
+        response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}").body)
       end  
 
       message = response['message']
@@ -41,14 +62,6 @@ module RouteNGN
 
       result
     end
-
-    def save
-      
-    end
-
-    def delete
-
-    end    
 
   end 
 

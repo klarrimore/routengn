@@ -5,15 +5,20 @@ module RouteNGN
 
     def initialize(args)
       super(args)
+      self.class.create_instance_methods(self)
     end
 
     def self.base_url
-      '/carrier'
+      '/carriers'
     end
 
-    def self.type
-      'carrier'
+    def add_url
+      "/#{name}"
     end
+
+    def delete_url
+      "/#{id}"
+    end    
 
     def groups      
       Group.find(:all, "carrier_id = #{id}")
