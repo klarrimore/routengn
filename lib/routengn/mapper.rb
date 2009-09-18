@@ -2,9 +2,7 @@ module RouteNGN
 
   module Mapper
     def self.included(model)
-      model.class_eval do
-        extend ClassMethods
-      end
+      model.extend ClassMethods
     end
   end
 
@@ -27,10 +25,10 @@ module RouteNGN
     end
 
     def delete(id)
-      response = (JSON.parse RouteNGN.connection.access_token.delete("#{base_url}/#{id}").body)  
+      response = (JSON.parse RouteNGN.connection.access_token.delete("#{base_url}/#{id}").body)
     end
 
-    #TODO we probably don't need complicated finders  
+    #TODO we probably don't need complicated finders
     def find(*args)
       case args.first
         when :all then
@@ -44,11 +42,11 @@ module RouteNGN
       result = []
 
       if !options.empty?
-        id = options.first.split.last # total temporary hack        
+        id = options.first.split.last # total temporary hack
         response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{id}").body)
       else
         response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}").body)
-      end  
+      end
 
       message = response['message']
 
@@ -63,6 +61,11 @@ module RouteNGN
       result
     end
 
-  end 
+    def save
 
-end
+    end
+    def delete
+
+    end
+  end # ClassMethods
+end # RouteNGN

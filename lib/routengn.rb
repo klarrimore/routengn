@@ -15,16 +15,14 @@ require 'routengn/rate'
 require 'routengn/route'
 
 module RouteNGN
-
   class Connection
     attr_accessor :access_token
 
     def initialize(site, key, secret)
-      @consumer=OAuth::Consumer.new(key,
-                                    secret,
-                                    { :signature_method   => 'HMAC-SHA1',
-                                      :site=>site
-                                    })
+      @consumer = OAuth::Consumer.new key, secret, {
+        :signature_method => 'HMAC-SHA1',
+        :site => site
+      }
 
       @request_token = @consumer.get_request_token
       @consumer.request(:get, @request_token.authorize_url)
@@ -32,7 +30,7 @@ module RouteNGN
       @access_token = @request_token.get_access_token
       @access_token.consumer.http.read_timeout = 5000
 
-      RouteNGN::connection = self
+      RouteNGN.connection = self
     end
   end
 
@@ -43,5 +41,4 @@ module RouteNGN
   def self.connection
     @@connection
   end
-
 end
