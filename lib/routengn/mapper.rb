@@ -19,12 +19,24 @@ module RouteNGN
   end # InstanceMethods
 
   module ClassMethods
+    attr_reader :fields
+
     def new(opts = {})
       instance = super() # don't want implicit args
-      opts.each do |attr, val|
-        instance.send attr, val
+      @fields.each do |field|
+        field = field.to_s
+        next unless opts.has_key? field
+        instance.send :"#{field}=", opts[field]
       end
       instance
+    end
+
+    def field(name)
+      @fields ||= []
+      return if @fields.include? name
+      @fields << name
+      define_method(name) { instance_variable_get :"@#{name}" }
+      define_method(:"#{name}=") { |val| instance_variable_set :"@#{name}", val }
     end
 
     def delete(id)
@@ -43,12 +55,7 @@ module RouteNGN
     def all(opts = {})
       result = []
 
-      response = RouteNGN.get base_url
-
-      message = response['message']
-
-      status = message['status']
-      raise "Failed with status: #{status}" if status != 'OK'
+      response = RouteNGN.get base_url, opts
 
       data = response['data']
 
