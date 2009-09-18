@@ -4,17 +4,21 @@ require 'oauth/consumer'
 require 'json'
 require 'http/multipart'
 require 'routengn/mapper'
-require 'routengn/model'
-require 'routengn/carrier'
-require 'routengn/group'
-require 'routengn/endpoint'
-require 'routengn/region'
-require 'routengn/locale'
-require 'routengn/dialcode'
-require 'routengn/rate'
-require 'routengn/route'
 
 module RouteNGN
+  $: << File.expand_path(File.dirname(__FILE__) + "/routengn/models")
+  MODELS = %w{
+    carrier
+    group
+    endpoint
+    region
+    locale
+    dialcode
+    rate
+    route
+  }
+  MODELS.each { |m| require m}
+
   class Connection
     attr_accessor :access_token
 

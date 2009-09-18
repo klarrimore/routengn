@@ -1,8 +1,8 @@
 module RouteNGN
-
   module Mapper
     def self.included(model)
       model.extend ClassMethods
+      model.send :include, InstanceMethods
     end
   end
 
@@ -11,38 +11,40 @@ module RouteNGN
       response = (JSON.parse RouteNGN.connection.access_token.post("#{self.class.base_url}#{add_url}").body)
     end
 
-    def delete
+    def destroy
       response = (JSON.parse RouteNGN.connection.access_token.delete("#{self.class.base_url}#{delete_url}").body)
     end
-  end
+  end # InstanceMethods
 
   module ClassMethods
-
-    def create_instance_methods(ref)
-      ref.instance_eval do
-        extend InstanceMethods
+    def new(opts = {})
+      instance = super() # don't want implicit args
+      opts.each do |attr, val|
+        instance.send attr, val
       end
+      instance
     end
 
     def delete(id)
       response = (JSON.parse RouteNGN.connection.access_token.delete("#{base_url}/#{id}").body)
     end
 
-    #TODO we probably don't need complicated finders
     def find(*args)
       case args.first
-        when :all then
-          return find_all(args[1..-1])
-        else
-          find_foo(args[1..-1])
+      when :all
+        all(*args[1..-1])
+      else
+        first(*args[1..-1])
       end
     end
 
-    def find_all(options)
+    def all(*args)
+      puts args.inspect
+      return
       result = []
 
-      if !options.empty?
-        id = options.first.split.last # total temporary hack
+      unless args.empty?
+        id = args.first.split.last # total temporary hack
         response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{id}").body)
       else
         response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}").body)
@@ -61,11 +63,7 @@ module RouteNGN
       result
     end
 
-    def save
-
-    end
-    def delete
-
+    def first
     end
   end # ClassMethods
 end # RouteNGN
