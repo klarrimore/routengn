@@ -1,11 +1,9 @@
 class Locale
   include RouteNGN::Mapper
 
-  def self.base_url
-    '/region'
-  end
+  field :id
 
   def dialcodes
-    Dialcode.find(:all, "dialcode_id = #{id}")
+    Dialcode.all :dialcode_id => id
   end
 end

@@ -6,18 +6,12 @@ require 'http/multipart'
 require 'routengn/mapper'
 
 module RouteNGN
-  $: << File.expand_path(File.dirname(__FILE__) + "/routengn/models")
-  MODELS = %w{
-    carrier
-    group
-    endpoint
-    region
-    locale
-    dialcode
-    rate
-    route
-  }
-  MODELS.each { |m| require m}
+  Dir.glob(File.dirname(__FILE__) + "/routengn/models/*.rb").each do |model|
+    require File.expand_path(model)
+  end
+  Dir.glob(File.dirname(__FILE__) + "/routengn/core_ext/*.rb").each do |ext|
+    require File.expand_path(ext)
+  end
 
   class Connection
     attr_accessor :access_token

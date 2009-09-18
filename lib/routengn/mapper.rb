@@ -31,6 +31,10 @@ module RouteNGN
       instance
     end
 
+    def base_url
+      "/#{name.downcase.pluralize}"
+    end
+
     def field(name)
       @fields ||= []
       return if @fields.include? name
@@ -66,7 +70,8 @@ module RouteNGN
       result
     end
 
-    def first
+    def first(opts = {})
+      all(opts).first
     end
   end # ClassMethods
 end # RouteNGN
