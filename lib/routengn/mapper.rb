@@ -1,8 +1,10 @@
 module RouteNGN
   module Mapper
     def self.included(model)
-      model.extend ClassMethods
-      model.send :include, InstanceMethods
+      model.class_eval do
+        extend ClassMethods
+        include InstanceMethods
+      end
     end
   end
 
@@ -38,21 +40,15 @@ module RouteNGN
       end
     end
 
-    def all(*args)
-      puts args.inspect
-      return
+    def all(opts = {})
       result = []
 
-      unless args.empty?
-        id = args.first.split.last # total temporary hack
-        response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}/#{id}").body)
-      else
-        response = (JSON.parse RouteNGN.connection.access_token.get("#{base_url}").body)
-      end
+      response = RouteNGN.get base_url
 
       message = response['message']
 
-      raise 'blew the fuck up' if message['text'] != 'OK'
+      status = message['status']
+      raise "Failed with status: #{status}" if status != 'OK'
 
       data = response['data']
 
