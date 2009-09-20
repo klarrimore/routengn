@@ -39,7 +39,7 @@ module RouteNGN
     end
 
     def destroy
-      response = RouteNGN.delete self.class.base_url, :id => id
+      response = RouteNGN.delete self.class.base_url, :id => primary
       response.success?
     end
   end # InstanceMethods
@@ -54,6 +54,7 @@ module RouteNGN
         next unless opts.has_key? field
         instance.send :"#{field}=", opts[field]
       end
+      raise PrimaryFieldException.new unless instance.respond_to? :primary
       instance
     end
 
@@ -67,12 +68,13 @@ module RouteNGN
       "/#{name.downcase.pluralize}"
     end
 
-    def field(name)
+    def field(name, opts = {})
       @fields ||= []
       return if @fields.include? name
       @fields << name
       define_method(name) { instance_variable_get :"@#{name}" }
       define_method(:"#{name}=") { |val| instance_variable_set :"@#{name}", val }
+      alias_method :primary, name if opts[:primary] # TODO prevent multiple primaries
     end
 
     def delete(id)
@@ -107,4 +109,10 @@ module RouteNGN
       all(opts).first # optimize/simplify?
     end
   end # ClassMethods
+
+  class PrimaryFieldException < Exception
+    def initialize(msg = "Model does not specify a primary field.")
+      super
+    end
+  end
 end # RouteNGN

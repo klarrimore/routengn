@@ -1,7 +1,7 @@
 class Group
   include RouteNGN::Mapper
 
-  field :id
+  field :id, :primary => true
   field :name
   field :direction
   field :margin

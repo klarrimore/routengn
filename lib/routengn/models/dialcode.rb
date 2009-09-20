@@ -1,7 +1,7 @@
 class Dialcode
   include RouteNGN::Mapper
 
-  field :id
+  field :id, :primary => true
   field :digits
-  
+
 end

@@ -1,7 +1,7 @@
 class Endpoint
   include RouteNGN::Mapper
 
-  field :id
+  field :id, :primary => true
   field :ip
 
   def group

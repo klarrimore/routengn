@@ -1,5 +1,5 @@
 class Route
   include RouteNGN::Mapper
 
-  field :id
+  field :id, :primary => true
 end
