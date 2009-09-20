@@ -2,4 +2,5 @@
 
 irb = RUBY_PLATFORM =~ /(:?mswin|mingw)/ ? 'irb.bat' : 'irb'
 
-exec "#{irb} -I \"#{File.dirname(__FILE__)}/../lib\" -r \"routengn\" --simple-prompt"
+
+exec "#{irb} -I \"#{File.dirname(__FILE__)}/../lib\" -r \"routengn\" -I \"#{File.dirname(__FILE__)}/../lib/routengn\" -r \"console\" --simple-prompt"
