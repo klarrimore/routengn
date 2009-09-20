@@ -9,12 +9,21 @@ module RouteNGN
   end
 
   module InstanceMethods
+    def attributes
+      self.class.fields.inject({}) do |_, field|
+        _[field] = send field
+        _
+      end
+    end
+
     def save
-      response = (JSON.parse RouteNGN.connection.access_token.post("#{self.class.base_url}#{add_url}").body)
+      response = RouteNGN.post self.class.base_url, self.attributes
+      response.success?
     end
 
     def destroy
-      response = (JSON.parse RouteNGN.connection.access_token.delete("#{self.class.base_url}#{delete_url}").body)
+      response = RouteNGN.delete self.class.base_url, :id => id
+      response.success?
     end
   end # InstanceMethods
 
@@ -44,7 +53,8 @@ module RouteNGN
     end
 
     def delete(id)
-      response = (JSON.parse RouteNGN.connection.access_token.delete("#{base_url}/#{id}").body)
+      response = RouteNGN.delete base_url, :id => id
+      response.success?
     end
 
     def find(*args)
@@ -71,7 +81,7 @@ module RouteNGN
     end
 
     def first(opts = {})
-      all(opts).first
+      all(opts).first # optimize/simplify?
     end
   end # ClassMethods
 end # RouteNGN
