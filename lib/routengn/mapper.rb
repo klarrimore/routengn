@@ -77,6 +77,12 @@ module RouteNGN
       alias_method :primary, name if opts[:primary] # TODO prevent multiple primaries
     end
 
+    def belongs_to(klass)
+      attr = :"#{klass}_id"
+      field attr
+      define_method(klass) { klass.camelize.constantize.first :id => send(attr) }
+    end
+
     def delete(id)
       response = RouteNGN.delete base_url, :id => id
       response.success?
@@ -97,6 +103,8 @@ module RouteNGN
       response = RouteNGN.get base_url, opts
 
       data = response['data']
+
+      return [new_from_saved(data)] unless data.is_a? Array
 
       data.each do |d|
         result << new_from_saved(d)

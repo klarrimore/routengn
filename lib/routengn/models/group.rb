@@ -6,11 +6,10 @@ class Group
   field :direction
   field :margin
 
+  belongs_to :carrier
+
   def endpoints
     Endpoint.all :epgroup_id => id
   end
 
-  def carrier
-    #TODO do a lookup on the carrier and create an object and return
-  end
 end

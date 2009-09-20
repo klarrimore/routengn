@@ -1,7 +1,7 @@
 class Carrier
   include RouteNGN::Mapper
 
-  field :id
+  field :id, :primary => true
   field :name
 
   def groups
