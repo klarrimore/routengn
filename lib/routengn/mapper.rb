@@ -9,6 +9,8 @@ module RouteNGN
   end
 
   module InstanceMethods
+    attr_accessor :saved
+
     def attributes
       self.class.fields.inject({}) do |_, field|
         _[field] = send field
@@ -16,8 +18,23 @@ module RouteNGN
       end
     end
 
+    def attr_params
+      self.attributes.inject({}) do |params, (k, v)|
+        params["group[#{k}]"] = v
+        params
+      end
+    end
+
+    def new?
+      !(@saved ||= false)
+    end
+
     def save
-      response = RouteNGN.post self.class.base_url, self.attributes
+      response = if new?
+        RouteNGN.post self.class.base_url, attr_params
+      else
+        RouteNGN.put self.class.base_url, attr_params
+      end
       response.success?
     end
 
@@ -37,6 +54,12 @@ module RouteNGN
         next unless opts.has_key? field
         instance.send :"#{field}=", opts[field]
       end
+      instance
+    end
+
+    def new_from_saved(opts = {})
+      instance = new opts
+      instance.saved = true
       instance
     end
 
@@ -74,7 +97,7 @@ module RouteNGN
       data = response['data']
 
       data.each do |d|
-        result << new(d)
+        result << new_from_saved(d)
       end
 
       result
