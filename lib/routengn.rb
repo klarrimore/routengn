@@ -66,7 +66,7 @@ module RouteNGN
     attr_reader :data, :status
 
     def initialize(raw)
-      @status = raw.code
+      @status = raw.code.to_i
       @data = JSON.parse raw.body
     end
 

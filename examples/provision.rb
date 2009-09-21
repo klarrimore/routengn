@@ -1,26 +1,21 @@
 #!/usr/bin/env ruby
 
-require 'json'
-gem 'oauth'
-require 'oauth/consumer'
-require 'multipart'
+$LOAD_PATH[0,0] = File.join(File.dirname(__FILE__), '..', 'lib')
+require 'routengn'
 
-@consumer=OAuth::Consumer.new "", #API key
-                              "", #API secret
-		              { :signature_method   => 'HMAC-SHA1',
-                                :site=>"" #EX: http://routengn.net
-                              }
-@request_token = @consumer.get_request_token
+include RouteNGN
 
-@consumer.request(:post, @request_token.authorize_url)
+RouteNGN.connect! "http://127.0.0.1:3000", "qcuL3sYAw9ZXdmSdqprBw", "LDI2rgxnIhJlNu5FBXh0UvtxJRtpr1OgnCIQ8Mpk"
 
-@access_token = @request_token.get_access_token
-@access_token.consumer.http.read_timeout = 5000
+carrier = Carrier.new({'name' => 'api_test_carrier'})
+carrier.save
+puts carrier.inspect
 
-carrier_id = JSON.parse(@access_token.get("/carrier/add/carrier/test-carrier").body)['data'].first['id']
-group_id = JSON.parse(@access_token.get("/carrier/add/group/test-group/#{carrier_id}").body)['data'].first['id']
-@access_token.get("/carrier/update/group/#{group_id}/direction/out")
-data, headers = Multipart::Post.prepare_query("uploaded_data" => File.new('/home/klarrimore/test_data/med_regions.txt'))
-@access_token.post('/upload/regions', data, headers)
+group = Group.new({'name' => 'api_test_group', 'carrier_id' => carrier.id})
+puts group.inspect
+
+#group.save
+#puts group.inspect
+
 
 

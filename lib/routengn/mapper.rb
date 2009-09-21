@@ -8,6 +8,7 @@ module RouteNGN
     end
   end
 
+  #TODO perhaps we can add some of the goodies provided through relationships like '<<'
   module InstanceMethods
     attr_accessor :saved
 
@@ -20,7 +21,7 @@ module RouteNGN
 
     def attr_params
       self.attributes.inject({}) do |params, (k, v)|
-        params["group[#{k}]"] = v
+        params["#{self.class.name.downcase}[#{k}]"] = v
         params
       end
     end
@@ -29,12 +30,14 @@ module RouteNGN
       !(@saved ||= false)
     end
 
+    #TODO: when something is saved, it should populate its primary key with what's returned in 'data'
     def save
       response = if new?
         RouteNGN.post self.class.base_url, attr_params
       else
         RouteNGN.put self.class.base_url, attr_params
       end
+
       response.success?
     end
 
