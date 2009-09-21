@@ -88,6 +88,11 @@ module RouteNGN
       define_method(klass) { klass.camelize.constantize.first attr => primary }
     end
 
+    def has_many(klass)
+      attr = :"#{name}_id"
+      define_method(klass.to_s.pluralize.to_sym) { klass.camelize.constantize.all attr => primary }
+    end
+
     def delete(id)
       response = RouteNGN.delete base_url, :id => id
       response.success?
