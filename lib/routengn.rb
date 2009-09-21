@@ -4,13 +4,11 @@ require 'oauth/consumer'
 require 'json'
 require 'http/multipart'
 require 'routengn/mapper'
+require 'active_support'
 
 module RouteNGN
   Dir.glob(File.dirname(__FILE__) + "/routengn/models/*.rb").each do |model|
     require File.expand_path(model)
-  end
-  Dir.glob(File.dirname(__FILE__) + "/routengn/core_ext/*.rb").each do |ext|
-    require File.expand_path(ext)
   end
 
   class Connection
