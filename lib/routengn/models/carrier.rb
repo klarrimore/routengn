@@ -4,7 +4,5 @@ class Carrier
   field :id, :primary => true
   field :name
 
-  def groups
-    Group.all :carrier_id => id
-  end
+  has_many :groups
 end

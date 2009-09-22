@@ -22,9 +22,8 @@ class Group
 
   belongs_to :instance
   belongs_to :carrier
-
-  def endpoints
-    Endpoint.all :epgroup_id => id
-  end
+  
+  has_many :endpoints
+  has_many :rates
 
 end

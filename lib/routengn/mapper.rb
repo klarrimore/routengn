@@ -80,20 +80,20 @@ module RouteNGN
       alias_method :primary, name if opts[:primary] # TODO prevent multiple primaries
     end
 
-    def belongs_to(klass)
+    def belongs_to(klass)  # This isn't really a klass (in the traditional sense) but a symbol rather... so we need to_s
       attr = :"#{klass}_id"
       field attr
-      define_method(klass) { klass.camelize.constantize.first :id => send(attr) }
+      define_method(klass) { klass.to_s.camelize.constantize.first :id => send(attr) }
     end
 
-    def has_one(klass)
+    def has_one(klass)  # This isn't really a klass (in the traditional sense) but a symbol rather... so we need to_s
       attr = :"#{name}_id"
-      define_method(klass) { klass.camelize.constantize.first attr => primary }
+      define_method(klass) { klass.to_s.camelize.constantize.first attr => primary }
     end
 
-    def has_many(klass)
+    def has_many(klass)  # This isn't really a klass (in the traditional sense) but a symbol rather... so we need to_s
       attr = :"#{name}_id"
-      define_method(klass.to_s.pluralize.to_sym) { klass.camelize.constantize.all attr => primary }
+      define_method(klass.to_s.pluralize.to_sym) { klass.to_s.singularize.camelize.constantize.all attr => primary }
     end
 
     def delete(id)

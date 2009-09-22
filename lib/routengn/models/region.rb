@@ -4,7 +4,5 @@ class Region
   field :id, :primary => true
   field :name
 
-  def locales
-    Locale.all :region_id => id
-  end
+  has_many :locales
 end

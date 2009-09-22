@@ -4,4 +4,5 @@ class Dialcode
   field :id, :primary => true
   field :digits
 
+  belongs_to :locale
 end

@@ -4,7 +4,8 @@ class Locale
   field :id, :primary => true
   field :name
 
-  def dialcodes
-    Dialcode.all :dialcode_id => id
-  end
+  belongs_to :region
+
+  has_many :dialcodes
+  has_many :rates
 end
