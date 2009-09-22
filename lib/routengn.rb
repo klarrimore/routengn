@@ -4,6 +4,7 @@ require 'oauth/consumer'
 require 'json'
 require 'http/multipart'
 require 'routengn/mapper'
+require 'routengn/uploader'
 require 'active_support'
 
 module RouteNGN

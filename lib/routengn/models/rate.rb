@@ -1,5 +1,6 @@
 class Rate
   include RouteNGN::Mapper
+  include RouteNGN::Uploader
 
   field :id, :primary => true
   field :rate

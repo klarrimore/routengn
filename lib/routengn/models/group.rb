@@ -1,6 +1,8 @@
 class Group
   include RouteNGN::Mapper
 
+  #TODO: fixure out a fix for abnormal foreign key 'epgroup_id'
+
   field :id, :primary => true
   field :name
   field :direction
