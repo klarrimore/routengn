@@ -42,8 +42,7 @@ module RouteNGN
     end
 
     def destroy
-      response = RouteNGN.delete self.class.base_url, :id => primary
-      response.success?
+      self.class.delete(self.id)
     end
   end # InstanceMethods
 
@@ -97,7 +96,7 @@ module RouteNGN
     end
 
     def delete(id)
-      response = RouteNGN.delete base_url, :id => id
+      response = RouteNGN.delete base_url, 'id' => id.to_s
       response.success?
     end
 
@@ -105,7 +104,7 @@ module RouteNGN
       case args.first
       when :all
         all(*args[1..-1])
-      else
+      else # maybe this shouldn't be a "catchall" 
         first(*args[1..-1])
       end
     end
