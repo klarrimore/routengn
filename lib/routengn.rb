@@ -37,16 +37,24 @@ module RouteNGN
       @connection
     end
 
-    def get(uri, params = {})
-      url = params.inject("#{uri}?") { |_, (k, v)| _ << "#{k}=#{v}" }
-      raw = @connection.access_token.get url
-      Response.new raw
-    end
-
-    [:post, :put, :delete].each do |http_method|
+    [:get, :delete].each do |http_method|
       define_method(http_method) do |*args|
         uri, params = args
         params ||= {}
+        url = params.inject("#{uri}?") { |_, (k, v)| _ << "#{k}=#{v}" }
+        raw = @connection.access_token.send http_method, url
+        Response.new raw
+      end
+    end
+
+    [:post, :put].each do |http_method|
+      define_method(http_method) do |*args|
+        uri, params = args
+        params ||= {}
+        params = params.inject({}) do |_, (k, v)|
+          _[k.to_s] = v.to_s
+          _
+        end
         check_connection!
         raw = @connection.access_token.send http_method, uri, params
         Response.new raw
