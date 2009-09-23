@@ -25,7 +25,7 @@ class Group
   belongs_to :instance
   belongs_to :carrier
   
-  has_many :endpoints
+  has_many :endpoints, :column => :epgroup_id
   has_many :rates
 
 end

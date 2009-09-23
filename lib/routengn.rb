@@ -69,6 +69,7 @@ module RouteNGN
     end
   end
 
+  # TODO: validation errors are now stored in failure message's data...  we should figure out what to do with it
   class Response
     SUCCESS_RANGE = (200..399)
 
@@ -76,6 +77,7 @@ module RouteNGN
 
     def initialize(raw)
       @status = raw.code.to_i
+      # TODO: if it's not a success code we probably shouldn't bother parsing the JSON
       @data = JSON.parse raw.body
     end
 

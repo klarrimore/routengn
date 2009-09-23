@@ -4,5 +4,5 @@ class Endpoint
   field :id, :primary => true
   field :ip
 
-  belongs_to :group
+  belongs_to :group, :column => :epgroup_id
 end
