@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = %q{2009-03-31}
   s.description = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
   s.email = %q{keithlarrimore+github@gmail.com}
-  s.files = ["README", "lib/routengn.rb", "lib/routengn", "lib/routengn/carrier.rb", "lib/routengn/mapper.rb", "lib/http", "lib/http/multipart.rb"]
+  s.files = ["README.rdoc"] + Dir['lib/**/*.rb']
   s.has_rdoc = false
   s.homepage = %q{http://github.com/mojombo/grit}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
