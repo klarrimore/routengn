@@ -2,6 +2,7 @@ class Record
   include RouteNGN::Mapper
 
   field :dialcode, :primary => true
+  field :account_id
   field :rn
   field :locale_id
   field :sent

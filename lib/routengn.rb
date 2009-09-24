@@ -62,6 +62,11 @@ module RouteNGN
       end
     end
 
+    define_method :upload do |*args|
+      uri, data, headers = args
+      raw = @connection.access_token.post uri, data, headers
+    end
+
     private
     def check_connection!
       raise ConnectionException.new unless @connection

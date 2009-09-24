@@ -1,14 +1,17 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH[0,0] = File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'rubygems'
 require 'json'
 gem 'oauth'
 require 'oauth/consumer'
-require 'multipart'
+require 'http/multipart'
 
-@consumer=OAuth::Consumer.new "", #API key
-                              "", #API secret
+@consumer=OAuth::Consumer.new "qcuL3sYAw9ZXdmSdqprBw", #API key
+                              "LDI2rgxnIhJlNu5FBXh0UvtxJRtpr1OgnCIQ8Mpk", #API secret
                               { :signature_method   => 'HMAC-SHA1',
-                                :site=>"" #EX: http://routengn.net
+                                :site=>"http://127.0.0.1:3000" #EX: http://routengn.net
                               }
 
 @request_token = @consumer.get_request_token
@@ -137,7 +140,7 @@ def upload_menu
       print "path: "
       path = gets.chomp
       data, headers = Multipart::Post.prepare_query("title" => 'title', "uploaded_data" => File.new(path))
-      puts @access_token.post('/upload/regions', data, headers)
+      puts @access_token.put('/upload/regions', data, headers)
     when '2'
       print "path: "
       path = gets.chomp
@@ -146,7 +149,7 @@ def upload_menu
       print "groups: "
       groups = gets.chomp
       data, headers = Multipart::Post.prepare_query("title" => 'title', "uploaded_data" => File.new(path))
-      puts @access_token.post("/upload/rates/#{rate_type}/#{groups}", data, headers)
+      puts @access_token.put("/upload/rates/#{rate_type}/#{groups}", data, headers)
     when 'back'
       return
   end

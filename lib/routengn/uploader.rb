@@ -8,9 +8,11 @@ module RouteNGN
   end
 
   module ClassMethods
-    def upload
-      # STUB
-      puts "data, headers = Multipart::Post.prepare_query(\"title\" => 'title', \"uploaded_data\" => File.new(path))"  
+    def upload(file, params = {})
+      data, headers = Multipart::Post.prepare_query("title" => 'title', "uploaded_data" => File.new(file))
+      puts data.inspect
+      puts headers.inspect
+      RouteNGN.connection.access_token.post("/upload#{base_url}", data, headers)
     end
   end
 end
