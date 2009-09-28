@@ -47,7 +47,7 @@ module RouteNGN
         end
       end
 
-      def self.prepare_query (params)
+      def self.prepare_query(params)
         fp = []
         params.each {|k, v|
           if v.respond_to?(:read)

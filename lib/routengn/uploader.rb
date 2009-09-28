@@ -8,8 +8,9 @@ module RouteNGN
   end
 
   module ClassMethods
-    def upload(file)
-      data, headers = HTTP::Multipart.prepare_query("title" => "upload", "uploaded_data" => File.new(file))
+    def upload(file, opts = {})
+      args = {:uploaded_data => File.new(file)}.merge! opts
+      data, headers = HTTP::Multipart.prepare_query(args)
       RouteNGN.upload("/upload#{base_url}", data, headers)
     end
   end
