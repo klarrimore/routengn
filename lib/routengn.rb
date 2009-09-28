@@ -64,7 +64,7 @@ module RouteNGN
 
     define_method :upload do |*args|
       uri, data, headers = args
-      raw = @connection.access_token.post uri, data, headers
+      raw = @connection.access_token.send :post, uri, data, headers
     end
 
     private
