@@ -1,6 +1,6 @@
 = Introduction
 
-This is a Ruby API Wrapper for the RouteNGN SIP routeing platform. For more information about
+This is a Ruby API Wrapper for the RouteNGN SIP routing platform. For more information about
 RouteNGN, see http://www.routengn.com.
 
 = Installation

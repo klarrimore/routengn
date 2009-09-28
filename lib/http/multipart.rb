@@ -1,122 +1,120 @@
 module RouteNGN
-  module HTTP
-    class Multipart
+  class HTTP
+    class << self
+      def post_multipart_form(url, params)
+        MultipartPost.new(url, params).post
+      end
+    end
 
-      def initialize( file_names )
-        @file_names = file_names
+    class MultipartPostFile
+      def initialize(filename=nil, content_type=nil, data=nil)
+        @filename = filename
+        @content_type = content_type
+        @data = data
       end
 
-      def post( to_url )
-        boundary = '----RubyMultipartClient' + rand(1000000).to_s + 'ZZZZZ'
+      attr_accessor :filename
+      attr_accessor :content_type
+      attr_accessor :data
+    end
 
-        parts = []
-        streams = []
-        @file_names.each do |param_name, filepath|
-          pos = filepath.rindex('/')
-          filename = filepath[pos + 1, filepath.length - pos]
-          parts << StringPart.new ( "--" + boundary + "\r\n" +
-                  "Content-Disposition: form-data; name=\"" + param_name.to_s + "\"; filename=\"" + filename + "\"\r\n" +
-                  "Content-Type: video/x-msvideo\r\n\r\n")
-          stream = File.open(filepath, "rb")
-          streams << stream
-          parts << StreamPart.new (stream, File.size(filepath))
-        end
-        parts << StringPart.new ( "\r\n--" + boundary + "--\r\n" )
+    class MultipartPost
+      def initialize(url, params)
+        @url = URI.parse( url )
+        @multipart_post_files = extract_file_parameters_from(params)
+        @params = extract_non_file_parameters_from(params)
+      end
 
-        post_stream = MultipartStream.new( parts )
-
-        url = URI.parse( to_url )
+      def post
         req = Net::HTTP::Post.new(url.path)
-        req.content_length = post_stream.size
-        req.content_type = 'multipart/form-data; boundary=' + boundary
-        req.body_stream = post_stream
-        res = Net::HTTP.new(url.host, url.port).start {|http| http.request(req) }
-
-        streams.each do |stream|
-          stream.close();
-        end
-
-        res
+        req.body = body
+        req.content_type = content_type
+        Net::HTTP.new(url.host, url.port).start {|http|
+          http.request(req)
+        }
       end
 
-    end
+      BOUNDARY = "KeithLarrimoreIsSuperDuperAwesome"
 
-    class StreamPart
-      def initialize( stream, size )
-        @stream, @size = stream, size
+    protected
+      attr_reader :url, :params, :multipart_post_files
+
+      def extract_file_parameters_from(hash)
+        hash.reject{|key, value| !multipart_post_file?(value)}
       end
 
-      def size
-        @size
+      def extract_non_file_parameters_from(hash)
+        hash.reject{|key, value| multipart_post_file?(value)}
       end
 
-      def read ( offset, how_much )
-        @stream.read ( how_much )
-      end
-    end
-
-    class StringPart
-      def initialize ( str )
-        @str = str
+      def multipart_post_file?(object)
+        object.respond_to?(:content_type) &&
+        object.respond_to?(:data) &&
+        object.respond_to?(:filename)
       end
 
-      def size
-        @str.length
+      def content_type
+        "multipart/form-data; boundary=#{BOUNDARY}"
       end
 
-      def read ( offset, how_much )
-        @str[offset, how_much]
-      end
-    end
-
-    class MultipartStream
-      def initialize( parts )
-        @parts = parts
-        @part_no = 0;
-        @part_offset = 0;
+      def body
+        encode_parameters + encode_multipart_post_files + final_boundary
       end
 
-      def size
-        total = 0
-        @parts.each do |part|
-          total += part.size
-        end
-        total
-      end
-
-      def read ( how_much )
-
-        if @part_no >= @parts.size
-          return nil;
-        end
-
-        how_much_current_part = @parts[@part_no].size - @part_offset
-
-        how_much_current_part = if how_much_current_part > how_much
-          how_much
+      def encode_multipart_post_files
+        return "" if multipart_post_files.empty?
+        if multipart_post_files.size == 1
+          name = multipart_post_files.keys.first
+          file = multipart_post_files.values.first
+          encode_multipart_post_file(name, file)
         else
-          how_much_current_part
+          raise "Currently more than 1 file upload is not supported."
         end
+      end
 
-        how_much_next_part = how_much - how_much_current_part
+      def encode_multipart_post_file(name, multipart_post_file)
+        parameter_boundary +
+        disposition_with_filename(name, multipart_post_file.filename) +
+        file_content_type(multipart_post_file.content_type) +
+        multipart_post_file.data +
+        "\r\n"
+      end
 
-        current_part = @parts[@part_no].read(@part_offset, how_much_current_part )
+      def encode_parameters
+       params.sort_by{|key, value| key.to_s}.map{|key, value| encode_parameter(key, value)}.join
+      end
 
-        if how_much_next_part > 0
-          @part_no += 1
-          @part_offset = 0
-          next_part = read ( how_much_next_part )
-          current_part + if next_part
-            next_part
-          else
-            ''
-          end
+      def encode_parameter(key, value)
+        parameter_boundary + disposition_with_name(key) + value.to_s + "\r\n"
+      end
+
+      def file_content_type(string)
+        "Content-Type: #{string}\r\n\r\n"
+      end
+
+      def disposition_with_filename(name, filename)
+        if name.nil?
+          disposition("filename=\"#{filename}\"")
         else
-          @part_offset += how_much_current_part
-          current_part
+          disposition("name=\"#{name}\"; filename=\"#{filename}\"")
         end
+      end
+
+      def disposition_with_name(name)
+        disposition("name=\"#{name}\"\r\n")
+      end
+
+      def disposition(attribute)
+        "Content-Disposition: form-data; #{attribute}\r\n"
+      end
+
+      def parameter_boundary
+        "--#{BOUNDARY}\r\n"
+      end
+
+      def final_boundary
+        "--#{BOUNDARY}--\r\n"
       end
     end
   end
 end
-
