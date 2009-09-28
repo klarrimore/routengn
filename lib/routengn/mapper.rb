@@ -101,12 +101,12 @@ module RouteNGN
     end
 
     def has_one(klass, opts = {})  # This isn't really a klass (in the traditional sense) but a symbol rather... so we need to_s
-      attr = opts[:column] ? opts[:column] : :"#{name}_id"
+      attr = opts[:column] ? opts[:column] : :"#{name.downcase}_id"
       define_method(klass) { klass.to_s.camelize.constantize.first attr => primary }
     end
 
     def has_many(klass, opts = {})  # This isn't really a klass (in the traditional sense) but a symbol rather... so we need to_s
-      attr = opts[:column] ? opts[:column] : :"#{name}_id"
+      attr = opts[:column] ? opts[:column] : :"#{name.downcase}_id"
       define_method(klass.to_s.pluralize.to_sym) { klass.to_s.singularize.camelize.constantize.all attr => primary }
     end
 
