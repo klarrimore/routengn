@@ -27,6 +27,6 @@ puts instance.inspect
 
 Rate.upload('my_rates.csv', 'group' => group.id, 'type_id' => type_id)
 
-
+Instance.first.generate(Group.all.collect{|x| x.id})
 
 
