@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'routengn'
+
+if ARGV.length != 1
+  $stderr.puts "usage: #{__FILE__} region_file.csv"
+  exit 1
+end
+
+RouteNGN.connect!
+
+Region.upload(ARGV[1])

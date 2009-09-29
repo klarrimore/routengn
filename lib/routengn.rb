@@ -12,13 +12,16 @@ module RouteNGN
     require File.expand_path(model)
   end
 
+  CONF_FILE = File.join ENV['HOME'], ".ngnconf"
+
   class Connection
     attr_accessor :access_token
 
-    def initialize(site, key, secret)
-      @consumer = OAuth::Consumer.new key, secret, {
+    def initialize(*args)
+      @site, @key, @secret = args.empty? ? file_config : args
+      @consumer = OAuth::Consumer.new @key, @secret, {
         :signature_method => 'HMAC-SHA1',
-        :site => site
+        :site => @site
       }
 
       @request_token = @consumer.get_request_token
@@ -27,15 +30,32 @@ module RouteNGN
       @access_token = @request_token.get_access_token
       @access_token.consumer.http.read_timeout = 5000
     end
+
+    def to_json
+      {:site => @site, :key => @key, :secret => @secret}.to_json
+    end
+
+    private
+    def file_config
+      data = File.open(CONF_FILE).read
+      data = JSON.parse data
+      [data['site'], data['key'], data['secret']]
+    end
   end
 
   class << self
-    def connect!(site, key, secret)
-      @connection = Connection.new site, key, secret
+    def connect!(*args)
+      @connection = Connection.new *args
     end
 
     def connection
       @connection
+    end
+
+    def write_config
+      File.open(CONF_FILE, 'w') do |f|
+        f << connection.to_json
+      end
     end
 
     [:get, :delete].each do |http_method|
