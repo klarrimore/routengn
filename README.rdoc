@@ -15,11 +15,11 @@ to run this command once.
 
 = Examples
 
-* klarrimore@calculatorwristwatch:~$ irb
-* irb(main):001:0> require 'rubygems'
-* => true
-* irb(main):002:0> require 'routengn'
-* => true
+  klarrimore@calculatorwristwatch:~$ irb
+  irb(main):001:0> require 'rubygems'
+  => true
+  irb(main):002:0> require 'routengn'
+  => true
 
 = Credits
 
