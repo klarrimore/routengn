@@ -2,9 +2,11 @@ require 'rubygems'
 gem 'oauth'
 require 'oauth/consumer'
 require 'json'
+
+$: << File.expand_path(File.join File.dirname(__FILE__), 'routengn')
 require 'http/multipart'
-require 'routengn/mapper'
-require 'routengn/uploader'
+require 'mapper'
+require 'uploader'
 require 'active_support'
 
 module RouteNGN
