@@ -63,8 +63,16 @@ module RouteNGN
     [:get, :delete].each do |http_method|
       define_method(http_method) do |*args|
         uri, params = args
-        params ||= {}
-        url = params.inject("#{uri}?") { |_, (k, v)| _ << "#{k}=#{v}" }
+        params ||= {}        
+        #TODO remove the trailing '&' from url
+        url = params.inject("#{uri}?") do |_, (k, v)|
+          if v.is_a? Hash # Handle nesting of depth 1
+            _ << v.collect { |nested_k, nested_v| "#{k}[#{nested_k}]=#{nested_v}&" }.join
+          else
+            _ << "#{k}=#{v}&"
+          end
+        end
+        check_connection!
         raw = @connection.access_token.send http_method, url
         Response.new raw
       end

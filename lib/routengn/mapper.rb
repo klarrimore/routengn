@@ -31,7 +31,7 @@ module RouteNGN
     end
 
     def save
-      response = if new?
+      response = if new?    
         RouteNGN.post self.class.base_url, attr_params
       else
         RouteNGN.put self.class.base_url, attr_params
