@@ -9,7 +9,8 @@ class Record
   field :received
   field :detail
   field :server
-  field :response_time 
+  field :response_time
+  field :created_at_in_seconds
   field :created_at
   field :updated_at
 
