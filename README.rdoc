@@ -3,7 +3,7 @@
 This is a Ruby API Wrapper for the RouteNGN SIP routing platform. For more information about
 RouteNGN, see http://www.routengn.com.
 
-*  Note: The is not the RouteNGN API itself.  This a wrapper designed to make it easier to integrate with the API.
+*  Note: This is not the RouteNGN API itself.  This a wrapper designed to make it easier to integrate with the RouteNGN API.
 
 = Installation
 
@@ -16,6 +16,8 @@ The first line tells RubyGems to add the GitHub gem repository. You only need
 to run this command once.
 
 = Examples
+
+Using irb:
 
   klarrimore@calculatorwristwatch:~$ irb
   irb(main):001:0> require 'rubygems'
