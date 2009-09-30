@@ -3,6 +3,11 @@
 This is a Ruby API Wrapper for the RouteNGN SIP routing platform. For more information about
 RouteNGN, see http://www.routengn.com.
 
+<dl>
+  <dt>Note:</dt>
+  <dd>The is not the RouteNGN API itself.  This a wrapper designed to make it easier to integrate with the API.</dd>
+</dl>
+
 = Installation
 
 Install the "routengn" gem by typing
@@ -20,6 +25,9 @@ to run this command once.
   => true
   irb(main):002:0> require 'routengn'
   => true
+  irb(main):003:0> RouteNGN.connect! "http://routengn.net", "qcuL3YAw9ZXdmSdqprBw", "LDI2rgxIhJlNu5FBXh0UvtxJRtpr1OgnCIQ8Mpk"
+  => #<RouteNGN::Connection:0x7ffaadc3f578 @access_token=#<OAuth::AccessToken:0x....
+  
 
 = Credits
 
