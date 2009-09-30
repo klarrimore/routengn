@@ -3,10 +3,7 @@
 This is a Ruby API Wrapper for the RouteNGN SIP routing platform. For more information about
 RouteNGN, see http://www.routengn.com.
 
-<dl>
-  <dt>Note:</dt>
-  <dd>The is not the RouteNGN API itself.  This a wrapper designed to make it easier to integrate with the API.</dd>
-</dl>
+**Note:** The is not the RouteNGN API itself.  This a wrapper designed to make it easier to integrate with the API.</dd>
 
 = Installation
 
