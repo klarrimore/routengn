@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = %q{2009-09-30}
   s.description = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
   s.email = %q{keithlarrimore+github@gmail.com}
-  s.files = ["README.rdoc", "lib/", "lib/routengn.rb", "lib/http", "lib/http/multipart.rb", "lib/routengn", "lib/routengn/uploader.rb", "lib/routengn/console.rb", "lib/routengn/models", "lib/routengn/models/route.rb", "lib/routengn/models/locale.rb", "lib/routengn/models/endpoint.rb", "lib/routengn/models/carrier.rb", "lib/routengn/models/region.rb", "lib/routengn/models/rate.rb", "lib/routengn/models/dialcode.rb", "lib/routengn/models/instance.rb", "lib/routengn/models/record.rb", "lib/routengn/models/group.rb", "lib/routengn/models/type.rb", "lib/routengn/mapper.rb"] 
+  s.files = ["script", "script/console", "routengn.gemspec", "examples", "examples/provision.rb", "examples/cli.rb", "README.rdoc", "bin", "bin/ngncmd", "lib", "lib/routengn.rb", "lib/routengn", "lib/routengn/mapper.rb", "lib/routengn/console.rb", "lib/routengn/models", "lib/routengn/models/locale.rb", "lib/routengn/models/endpoint.rb", "lib/routengn/models/record.rb", "lib/routengn/models/instance.rb", "lib/routengn/models/route.rb", "lib/routengn/models/rate.rb", "lib/routengn/models/region.rb", "lib/routengn/models/type.rb", "lib/routengn/models/dialcode.rb", "lib/routengn/models/group.rb", "lib/routengn/models/carrier.rb", "lib/routengn/http", "lib/routengn/http/multipart.rb", "lib/routengn/uploader.rb"] 
   s.has_rdoc = false
   s.homepage = %q{http://github.com/mojombo/grit}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
