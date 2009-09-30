@@ -15,10 +15,10 @@ begin
     gemspec.require_paths = ["lib"]
     gemspec.rubygems_version = %q{1.3.1}
     gemspec.summary = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
-    gemspecs.add_dependency 'activesupport'
-    gemspecs.add_dependency 'mime-types'
-    gemspecs.add_dependency 'json'
-    gemspecs.add_dependency 'oauth'
+    gemspec.add_dependency 'activesupport'
+    gemspec.add_dependency 'mime-types'
+    gemspec.add_dependency 'json'
+    gemspec.add_dependency 'oauth'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
