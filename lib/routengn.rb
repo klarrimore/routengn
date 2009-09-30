@@ -4,6 +4,8 @@ require 'oauth/consumer'
 require 'json'
 
 $: << File.expand_path(File.join File.dirname(__FILE__), 'routengn')
+require 'mime/types'
+require 'cgi'
 require 'http/multipart'
 require 'mapper'
 require 'uploader'

@@ -9,9 +9,7 @@ module RouteNGN
       ## Anything that's broken and wrong probably the fault of Bill Stilwell
       ##(bill@marginalia.org)
       ### NOW:
-      ## Everything wrong is due to keith@oreilly.com
-      require 'mime/types'
-      require 'cgi'
+      ## Everything wrong is due to keith@oreilly.com     
 
       BOUNDARY = 'larrimores-rule0000'
       HEADER = {"Content-type" => "multipart/form-data, boundary=" + BOUNDARY + " "}
