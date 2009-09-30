@@ -1,12 +1,33 @@
 #!/usr/bin/env ruby
 
-require 'routengn'
+require File.dirname(__FILE__) + '/../lib/routengn'
 
-if ARGV.length != 1
-  $stderr.puts "usage: #{__FILE__} region_file.csv"
+def ask(prompt)
+  print "#{prompt}: "
+  return $stdin.gets.strip
+end
+
+def configure
+  user = ENV['USER'] ? ENV['USER'] : `who am i`
+  puts "Configuring ngncmd for #{user}..."
+  site = ask "RouteNGN Site (ex. http://routengn.net)"
+  key = ask "API Key"
+  secret = ask "API Secret"
+  print "Trying to connect... "
+  begin
+    if RouteNGN.connect! site, key, secret
+      puts "Success"
+      print "Writing config file... "
+      RouteNGN.write_config
+      return puts("Success")
+    end
+  rescue Exception
+    # noop
+  end
+  puts "Failed"
+  $stderr.puts "Please check your site and credentials and try again."
   exit 1
 end
 
-RouteNGN.connect!
+configure if ARGV[0] && ARGV[0] == '--configure' || ARGV[0] == '-c'
 
-Region.upload(ARGV[1])
