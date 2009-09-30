@@ -4,7 +4,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "routengn" 
-    gemspec.version = %q{0.27} 
+    #gemspec.version = %q{0.27} 
     gemspec.authors = ["Keith Larrimore", "Quin Hoxie"]                                                                        
     gemspec.date = "2009-09-30"
     gemspec.description = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
