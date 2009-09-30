@@ -97,6 +97,12 @@ module RouteNGN
       raw = @connection.access_token.send :post, uri, data, headers
     end
 
+    # TODO: find a better place to do this
+    def apply!
+      response = post '/apply'
+      response.success?
+    end
+
     private
     def check_connection!
       raise ConnectionException.new unless @connection
