@@ -7,7 +7,7 @@ RouteNGN, see http://www.routengn.com.
 
 Install the "routengn" gem by typing
 
-  $ gem sources -a http://gems.github.com
+  $ sudo gem sources -a http://gems.github.com
   $ sudo gem install klarrimore-routengn
 
 The first line tells RubyGems to add the GitHub gem repository. You only need
@@ -15,9 +15,16 @@ to run this command once.
 
 = Examples
 
-= The Driver
+* klarrimore@calculatorwristwatch:~$ irb
+* irb(main):001:0> require 'rubygems'
+* => true
+* irb(main):002:0> require 'routengn'
+* => true
 
 = Credits
+
+  klarrimore@gentel.net
+  qhoxie@gentel.net
 
 = License
 
