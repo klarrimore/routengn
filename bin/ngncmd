@@ -1,33 +1,36 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
+require 'thor'
 require File.dirname(__FILE__) + '/../lib/routengn'
 
-def ask(prompt)
-  print "#{prompt}: "
-  return $stdin.gets.strip
-end
+class NGNCommand < Thor
+  map "-c" => :configure
 
-def configure
-  user = ENV['USER'] ? ENV['USER'] : `who am i`
-  puts "Configuring ngncmd for #{user}..."
-  site = ask "RouteNGN Site (ex. http://routengn.net)"
-  key = ask "API Key"
-  secret = ask "API Secret"
-  print "Trying to connect... "
-  begin
-    if RouteNGN.connect! site, key, secret
-      puts "Success"
-      print "Writing config file... "
-      RouteNGN.write_config
-      return puts("Success")
+  desc "configure", "Set up your RouteNGN API config (.ngnconf)"
+  def configure
+    user = ENV['USER'] ? ENV['USER'] : `who am i`
+    say "Configuring ngncmd for #{user}...", :yellow
+    site = ask "RouteNGN Site (ex. http://routengn.net):", :magenta
+    key = ask "API Key:", :magenta
+    secret = ask "API Secret:", :magenta
+    say "Trying to connect... ", :yellow
+    begin
+      if RouteNGN.connect! site, key, secret
+        say "Success", :green
+        say "Writing config file... ", :yellow
+        RouteNGN.write_config
+        return say("Success", :green)
+      end
+    rescue Exception
+      # noop
     end
-  rescue Exception
-    # noop
+    say "Failed", :red
+    say "\nPlease check your site and credentials and try again.", :red
+    exit 1
   end
-  puts "Failed"
-  $stderr.puts "Please check your site and credentials and try again."
-  exit 1
 end
 
-configure if ARGV[0] && ARGV[0] == '--configure' || ARGV[0] == '-c'
+
+NGNCommand.start
 
