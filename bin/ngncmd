@@ -5,7 +5,8 @@ require 'thor'
 require File.dirname(__FILE__) + '/../lib/routengn'
 
 class NGNCommand < Thor
-  map "-c" => :configure
+  map "--configure" => :configure,
+      "--upload-regions" => :region_upload
 
   desc "configure", "Set up your RouteNGN API config (.ngnconf)"
   def configure
@@ -28,6 +29,31 @@ class NGNCommand < Thor
     say "Failed", :red
     say "\nPlease check your site and credentials and try again.", :red
     exit 1
+  end
+
+  desc "upload regions", "Upload a regions file"
+  def region_upload
+    file = ask "Path to file:", :magenta
+    unless File.readable? file
+      say "Error: file is not readable"
+      exit 1
+    end
+    connect
+    say "Uploading file... "
+    Region.upload(file)
+    say "Success"
+  end
+
+
+  no_tasks do
+    def connect
+      say "Establishing connection... "
+      RouteNGN.connect!
+      say "Success"
+    rescue Exception
+      say "Failed"
+      exit 1
+    end
   end
 end
 
