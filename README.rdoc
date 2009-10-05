@@ -29,7 +29,12 @@ Using irb:
   irb(main):004:0> Carrier.all
   => [#<Carrier:0x7f1c6e36ce28 @id=152, @saved=true, @name="test">]
   irb(main):005:0> Carrier.first.groups
-  => [#<Group:0x7f1c6e335c70 @active_end_day=nil, @id=103, @add_type=nil, @carrier_id=152, @strip_digits=nil, @active_begin_day=nil, @add_field=nil, @saved=true, @active_end_time=nil, @margin=0, @trunkgroup=nil, @add_digits=nil, @active_begin_time=nil, @direction="in", @name="test2", @remove_rn=nil, @prefix=nil, @rn_prefix=nil>, #<Group:0x7f1c6e335c48 @active_end_day=nil, @id=102, @add_type=nil, @carrier_id=152, @strip_digits=nil, @active_begin_day=nil, @add_field=nil, @saved=true, @active_end_time=nil, @margin=0, @trunkgroup=nil, @add_digits=nil, @active_begin_time=nil, @direction="out", @name="test", @remove_rn=nil, @prefix=nil, @rn_prefix=nil>]
+  => [#<Group:0x7f1c6e335c70 @active_end_day=nil, @id=103, @add_type=nil, @carrier_id=152, @strip_digits=nil,
+  @active_begin_day=nil, @add_field=nil, @saved=true, @active_end_time=nil, @margin=0, @trunkgroup=nil,
+  @add_digits=nil, @active_begin_time=nil, @direction="in", @name="test2", @remove_rn=nil, @prefix=nil,
+  @rn_prefix=nil>, #<Group:0x7f1c6e335c48 @active_end_day=nil, @id=102, @add_type=nil, @carrier_id=152,
+  @strip_digits=nil, @active_begin_day=nil, @add_field=nil, @saved=true, @active_end_time=nil, @margin=0, @trunkgroup=nil,
+  @add_digits=nil, @active_begin_time=nil, @direction="out", @name="test", @remove_rn=nil, @prefix=nil, @rn_prefix=nil>]
   irb(main):006:0> Carrier.first.groups.first.endpoints
   => [#<Endpoint:0x7f1c6e2f21c8 @id=39, @saved=true, @ip="65.200.189.134">]
   
