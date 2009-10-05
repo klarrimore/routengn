@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{routengn}
-  s.version = "0.2.8"
+  s.version = "0.2.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Keith Larrimore", "Quin Hoxie"]
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.files = [
     "README.rdoc",
      "bin/ngncmd",
+     "docs/RouteNGN-Gems-Install.doc",
      "examples/cli.rb",
      "examples/provision.rb",
      "lib/routengn.rb",
