@@ -9,7 +9,12 @@ class Instance
   # custom method
   # TODO make this more generic... possibly add functionality to the mapper that will allow for custom actions  
   def generate(groups)
-    response = RouteNGN.put self.class.base_url, attr_params.merge!({:groups => groups.join('-')})
+    groups_params = groups.inject({}) do |params, (k, v)|
+        params["groups[#{k}]"] = 1
+        params
+    end
+
+    response = RouteNGN.put self.class.base_url, {:id => self.id}.merge!(groups_params)
     response.success?
   end
 
