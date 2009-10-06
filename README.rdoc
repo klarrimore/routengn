@@ -9,8 +9,8 @@ RouteNGN, see http://www.routengn.com.
 
 Install the "routengn" gem by typing
 
-  $ sudo gem sources -a http://gems.github.com
-  $ sudo gem install klarrimore-routengn
+  $ sudo gem sources -a http://gemcutter.org
+  $ sudo gem install routengn
 
 The first line tells RubyGems to add the GitHub gem repository. You only need
 to run this command once.
