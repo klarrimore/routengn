@@ -7,7 +7,8 @@ require File.dirname(__FILE__) + '/../lib/routengn'
 class NGNCommand < Thor
   map "--configure" => :configure,
       "--upload-regions" => :region_upload,
-      "--upload-rates" => :rate_upload
+      "--upload-rates" => :rate_upload,
+      "--carrier" => :carrier_show
 
   desc "configure", "Set up your RouteNGN API config (.ngnconf)"
   def configure
@@ -56,6 +57,13 @@ class NGNCommand < Thor
     say "Uploading file... "
     Rate.upload(file)
     say "Success"
+  end
+
+  desc "show carrier", "Show a carrier based on ID"
+  method_options :id => :numeric
+  def carrier_show
+    connect
+    say Carrier.first(:id => options.id).to_yaml
   end
 
 
