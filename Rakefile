@@ -3,8 +3,8 @@ require 'rubygems'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "routengn" 
-    gemspec.authors = ["Keith Larrimore", "Quin Hoxie"]                                                                        
+    gemspec.name = "routengn"
+    gemspec.authors = ["Keith Larrimore", "Quin Hoxie"]
     gemspec.date = "2009-09-30"
     gemspec.description = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
     gemspec.email = %q{keithlarrimore+github@gmail.com}
@@ -20,6 +20,7 @@ begin
     gemspec.add_dependency 'json'
     gemspec.add_dependency 'oauth'
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
