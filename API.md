@@ -257,6 +257,44 @@ Yes
       epgroup_id: Int
     }
 
+#### Add
+Add a new endpoint
+##### URL
+http://routengn.net/endpoints
+##### Verb
+POST
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *ip* [Required] ip for the endpoint
++ *epgroup_id* [Required] id of group the endpoint belongs to
+
+##### Response
+    {
+      endpoint: {
+        ip:         String,
+        epgroup_id: Int
+      }
+    }
+
+#### Delete
+Delete an endpoint
+##### URL
+http://routengn.net/endpoints
+##### Verb
+DELETE
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *id* [Required] id of the endpoint to update
+
+##### Response
+    Boolean
+
 ### Instance
 #### List/Show
 Returns instances for a given id or all instances
@@ -279,7 +317,47 @@ Yes
       lastgen:    Time
     }
 
-### Routecase
+#### Add
+Add a new instance
+##### URL
+http://routengn.net/instances
+##### Verb
+POST
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *name* [Required] ids of groups
++ *type_id* [Required] id of the type for the instance
+
+##### Response
+    {
+      instance: {
+        id: Int,
+        name: String,
+        type_id: Int
+      }
+    }
+
+#### Update/Generate
+Generate LCR based on groups and instance
+##### URL
+http://routengn.net/instances
+##### Verb
+PUT
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *id* [Required] id of instance
++ *groups* [Required] ids of groups
+
+##### Response
+    Boolean
+
+### Route
 #### List/Show
 Returns routes for a given instance
 ##### URL
@@ -302,6 +380,45 @@ Yes
       epg_order:    String,
       epg_block:    String
     }
+
+#### Update/Generate
+Update LCR based on route change
+##### URL
+http://routengn.net/routes
+##### Verb
+PUT
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *instance_id* [Required] id of instance
++ *locale_id* [Required] id of locale
++ *routecase_id* [Required] id of route
++ *table_type* [Required] type of the table being updated
++ *route_type* [Required] type of the route being updated
+
+##### Response
+    Boolean
+
+#### Search
+Search for routes
+##### URL
+http://routengn.net/routes/search
+##### Verb
+GET
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *search* [Required] search query for routes
++ *instance_id* [Required] id of instance
++ *table_type* [Required] type of the table being updated
++ *route_type* [Required] type of the route being updated
+
+##### Response
+    CSV
 
 ### Rate
 #### List/Show
@@ -326,6 +443,73 @@ Yes
       type_id:      Int,
       rate:         Double
     }
+
+#### Add
+Add a new rate
+##### URL
+http://routengn.net/rates
+##### Verb
+POST
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *rate* [Required] value for the rate
++ *type_id* [Required] id of type
++ *group_id* [Required] id of group
++ *locale_id* [Required] id of locale
+
+##### Response
+    {
+      id:           Int,
+      locale_id:    Int,
+      epgroup_id:   Int,
+      type_id:      Int,
+      rate:         Double
+    }
+
+#### Update
+Update attributes of a rate
+##### URL
+http://routengn.net/rates
+##### Verb
+PUT
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *id* [Required] id of the rate to update
++ *rate* [Optional] value for the rate
++ *type_id* [Optional] id of type
++ *group_id* [Optional] id of group
++ *locale_id* [Optional] id of locale
+
+##### Response
+    {
+      id:           Int,
+      locale_id:    Int,
+      epgroup_id:   Int,
+      type_id:      Int,
+      rate:         Double
+    }
+
+#### Delete
+Delete an existing rate
+##### URL
+http://routengn.net/rates
+##### Verb
+DELETE
+##### Formats
+JSON
+##### Authentication Required
+Yes
+##### Parameters
++ *id* [Required] id of the rate to delete
+
+##### Response
+    Boolean
 
 ### Type
 #### List/Show
