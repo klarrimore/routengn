@@ -5,11 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{routengn}
-  s.version = "0.2.9"
+  s.version = "0.2.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Keith Larrimore", "Quin Hoxie"]
-  s.date = %q{2009-10-10}
+  s.date = %q{2009-09-30}
+  s.default_executable = %q{ngncmd}
   s.description = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
   s.email = %q{keithlarrimore+github@gmail.com}
   s.executables = ["ngncmd"]
@@ -20,7 +21,6 @@ Gem::Specification.new do |s|
     "README.rdoc",
      "bin/ngncmd",
      "docs/RouteNGN-Gems-Install.doc",
-     "examples/cli.rb",
      "examples/provision.rb",
      "lib/routengn.rb",
      "lib/routengn/console.rb",
@@ -35,7 +35,6 @@ Gem::Specification.new do |s|
      "lib/routengn/models/rate.rb",
      "lib/routengn/models/record.rb",
      "lib/routengn/models/region.rb",
-     "lib/routengn/models/route.rb",
      "lib/routengn/models/type.rb",
      "lib/routengn/uploader.rb",
      "routengn.gemspec",
@@ -47,8 +46,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
   s.test_files = [
-    "examples/provision.rb",
-     "examples/cli.rb"
+    "examples/provision.rb"
   ]
 
   if s.respond_to? :specification_version then
