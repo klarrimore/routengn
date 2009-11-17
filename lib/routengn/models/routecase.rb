@@ -1,4 +1,4 @@
-class Route
+class Routecase
   include RouteNGN::Mapper
 
   field :id, :primary => true
