@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{routengn}
-  s.version = "0.2.10"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Keith Larrimore", "Quin Hoxie"]
-  s.date = %q{2009-11-17}
+  s.date = %q{2010-01-27}
   s.default_executable = %q{ngncmd}
   s.description = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
   s.email = %q{keithlarrimore+github@gmail.com}
