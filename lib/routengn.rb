@@ -67,13 +67,8 @@ module RouteNGN
         uri, params = args
         params ||= {}        
         #TODO remove the trailing '&' from url
-        url = params.inject("#{uri}?") do |_, (k, v)|
-          if v.is_a? Hash # Handle nesting of depth 1
-            _ << v.collect { |nested_k, nested_v| "#{k}[#{nested_k}]=#{nested_v}&" }.join
-          else
-            _ << "#{k}=#{v}&"
-          end
-        end
+        url = "#{uri}?"
+        params.each {|k,v| url += "#{k}#{nested_hash_url_builder(nil,v)}"}
         check_connection!
         raw = @connection.access_token.send http_method, url
         Response.new raw
@@ -110,6 +105,18 @@ module RouteNGN
       raise ConnectionException.new unless @connection
       raise OAuthException.new unless @connection.access_token
     end
+
+
+    def nested_hash_url_builder(k,v)
+      if !v.is_a? Hash
+        "=#{v}&"
+      else
+        v.inject('') do |_, (nk, nv)|
+          _ << "[#{nk}]#{nested_hash_url_builder(nk,nv)}"
+        end
+      end      
+    end
+
   end
 
   # TODO: validation errors are now stored in failure message's data...  we should figure out what to do with it

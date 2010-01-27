@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
      "lib/routengn/models/rate.rb",
      "lib/routengn/models/record.rb",
      "lib/routengn/models/region.rb",
+     "lib/routengn/models/routecase.rb",
      "lib/routengn/models/type.rb",
      "lib/routengn/uploader.rb",
      "routengn.gemspec",
