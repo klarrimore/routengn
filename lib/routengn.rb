@@ -67,10 +67,10 @@ module RouteNGN
         uri, params = args
         params ||= {}        
         #TODO remove the trailing '&' from url
-        url = "#{uri}?"
-        params.each {|k,v| url += "#{k}#{nested_hash_url_builder(nil,v)}"}
+        url_pieces = ["#{uri}?"]
+        params.each {|k,v| url_pieces += nested_hash_url_builder(k, v, 0)}
         check_connection!
-        raw = @connection.access_token.send http_method, url
+        raw = @connection.access_token.send http_method, url_pieces.join
         Response.new raw
       end
     end
@@ -106,16 +106,22 @@ module RouteNGN
       raise OAuthException.new unless @connection.access_token
     end
 
-
-    def nested_hash_url_builder(k,v)
-      if !v.is_a? Hash
-        "=#{v}&"
-      else
-        v.inject('') do |_, (nk, nv)|
-          _ << "[#{nk}]#{nested_hash_url_builder(nk,nv)}"
+    def nested_hash_url_builder(k, v, depth = 0)
+      if depth == 0 and !v.is_a? Hash
+        ["#{k}=#{v}&"]
+      elsif depth != 0 and !v.is_a? Hash
+        ["=#{v}&"]
+      elsif depth == 0
+        v.collect do |nk, nv|
+          "#{k}[#{nk}]#{nested_hash_url_builder(nk,nv,depth+1)}"
         end
-      end      
+      else
+        v.collect do |nk, nv|
+          "[#{nk}]#{nested_hash_url_builder(nk,nv,depth+1)}"
+        end
+      end
     end
+
 
   end
 

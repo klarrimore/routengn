@@ -19,6 +19,7 @@ begin
     gemspec.add_dependency 'mime-types'
     gemspec.add_dependency 'json'
     gemspec.add_dependency 'oauth'
+    gemspec.add_dependency 'thor'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
