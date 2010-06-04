@@ -96,7 +96,7 @@ module RouteNGN
 
     def belongs_to(klass, opts = {})  # This isn't really a klass (in the traditional sense) but a symbol rather... so we need to_s
       attr = opts[:column] ? opts[:column] : :"#{klass}_id"
-      field attr
+      field attr      
       define_method(klass) { klass.to_s.camelize.constantize.first :id => send(attr) }
     end
 
@@ -112,6 +112,11 @@ module RouteNGN
 
     def delete(id)
       response = RouteNGN.delete base_url, :id => id
+      response.success?
+    end
+
+    def delete_all(opts = {})
+      response = RouteNGN.delete base_url, opts
       response.success?
     end
 
