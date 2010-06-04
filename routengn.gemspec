@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{routengn}
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Keith Larrimore", "Quin Hoxie"]
-  s.date = %q{2010-02-02}
+  s.date = %q{2009-09-30}
   s.default_executable = %q{ngncmd}
   s.description = %q{RouteNGN is an Advanced SIP Redirect Routing Platform.}
   s.email = %q{keithlarrimore+github@gmail.com}
@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
      "routengn.gemspec",
      "script/console"
   ]
+  s.has_rdoc = false
   s.homepage = %q{http://github.com/klarrimore/routengn}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
